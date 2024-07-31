@@ -1,60 +1,76 @@
-import { Children, useState } from 'react'
-import './App.css'
+import { Children, useState } from 'react' // Importamos cosas necesarias de React
+import './App.css' // Importamos estilos CSS
 
-const TURNS = { //Esta constante TURNS guarda quiénes pueden jugar: 'X' y 'O'. En un juego de tres en raya, los jugadores toman turnos usando 'X' o 'O'.
+// Definimos quiénes pueden jugar: 'X' y 'O'
+const TURNS = { 
   X: 'x',
   O: 'o'
 }
 
-// const board = Array(9).fill(null) //Es un arreglo que tiene 9 espacios, todos inicializados con null. Representa nuestro tablero de tres en raya vacío.
+// Componente Square representa un cuadrado en el tablero
+const Square = ({ children, isSelected, updateBoard, index }) => { 
+  const className = `square ${isSelected ? 'is-selected' : ''}` // Clase para resaltar el turno actual
 
-const Square = ({ children, updateBoard, index }) => { //Aquí tenemos un componente llamado Square que representa un cuadrado del tablero de tres en raya.
+  const handleClick = () => { // Cuando hacemos clic en un cuadrado
+    updateBoard()
+  }
+
   return (
-    <div className="square">
-      {children}
+    <div onClick={handleClick} className={className}> {/* Llama a handleClick cuando se hace clic */}
+      {children} {/* Muestra el contenido del cuadrado */}
     </div>
   )
 }
 
+// Componente principal App
 function App() {
-
+  // Estado para el tablero de juego, inicialmente vacío
   const [board, setBoard] = useState(Array(9).fill(null))
+  // Estado para el turno, inicialmente es el turno de 'X'
   const [turn, setTurn] = useState(TURNS.X)
 
+  // Función para actualizar el tablero y cambiar de turno
+  const updateBoard = () => {
+    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X // Cambiamos el turno
+  }
+
   return (
-    <main className="board">
-      <h2>Hola mundo</h2>
-      <section className="game">
+    <main className="board"> {/* Contenedor principal del juego */}
+      <h2>Hola mundo</h2> {/* Título del juego */}
+      
+      <section className="game"> {/* Sección del tablero de juego */}
         {
-          board.map((_, index) => { {/* Este es un método que recorre cada espacio del tablero (9 en total) y crea un componente Square para cada uno. Usa index para identificar cada cuadrado. */}
+          board.map((_, index) => { 
+            // Recorre cada espacio del tablero y crea un componente Square para cada uno
             return (
               <Square 
-                key={index}
-                index={index}
+                key={index} // Clave única para cada cuadrado
+                index={index} // Índice del cuadrado
+                updateBoard={updateBoard} // Función para actualizar el tablero
               >
-                
+                {/* Espacio para mostrar contenido del cuadrado */}
               </Square>
             )
           }) 
         }
       </section>
-      <section className="turn">
-
+      
+      <section className="turn"> {/* Sección para mostrar de quién es el turno */}
+        {/* Cuadrado para mostrar si es el turno de 'X' */}
         <Square
-          isSelected={turn === TURNS.X}
+          isSelected={turn === TURNS.X} // Resalta si es el turno de 'X'
         >
           {TURNS.X}
         </Square>
-
+        {/* Cuadrado para mostrar si es el turno de 'O' */}
         <Square
-          isSelected={turn === TURNS.O}
+          isSelected={turn === TURNS.O} // Resalta si es el turno de 'O'
         >
           {TURNS.O}
         </Square>
-
       </section>
     </main>
   )
 }
 
-export default App
+export default App // Exportamos el componente App para que pueda ser usado en otros archivos
