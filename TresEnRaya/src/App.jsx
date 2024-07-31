@@ -1,4 +1,4 @@
-import { Children, useState } from 'react' // Importamos cosas necesarias de React
+import { useState } from 'react' // Importamos cosas necesarias de React
 import './App.css' // Importamos estilos CSS
 
 // Definimos quiénes pueden jugar: 'X' y 'O'
@@ -12,7 +12,7 @@ const Square = ({ children, isSelected, updateBoard, index }) => {
   const className = `square ${isSelected ? 'is-selected' : ''}` // Clase para resaltar el turno actual
 
   const handleClick = () => { // Cuando hacemos clic en un cuadrado
-    updateBoard()
+    updateBoard(index)
   }
 
   return (
@@ -30,8 +30,13 @@ function App() {
   const [turn, setTurn] = useState(TURNS.X)
 
   // Función para actualizar el tablero y cambiar de turno
-  const updateBoard = () => {
+  const updateBoard = (index) => {
+    const newBoard = [...board]
+    newBoard[index] = turn
+    setBoard(newBoard)
+
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X // Cambiamos el turno
+    setTurn(newTurn)
   }
 
   return (
@@ -40,7 +45,7 @@ function App() {
       
       <section className="game"> {/* Sección del tablero de juego */}
         {
-          board.map((_, index) => { 
+          board.map((square, index) => { 
             // Recorre cada espacio del tablero y crea un componente Square para cada uno
             return (
               <Square 
@@ -48,7 +53,7 @@ function App() {
                 index={index} // Índice del cuadrado
                 updateBoard={updateBoard} // Función para actualizar el tablero
               >
-                {/* Espacio para mostrar contenido del cuadrado */}
+                { square /* Espacio para mostrar contenido del cuadrado */}
               </Square>
             )
           }) 
