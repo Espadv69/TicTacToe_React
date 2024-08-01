@@ -1,7 +1,7 @@
 // Definimos quiénes pueden jugar: 'X' y 'O'
 export const TURNS = { 
-    X: 'x',
-    O: 'o'
+    X: '❌',
+    O: '⚪'
 }
   
   // Combos que se pueden hacer
