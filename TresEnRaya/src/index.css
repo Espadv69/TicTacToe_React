@@ -42,6 +42,11 @@ body {
   cursor: pointer;
 }
 
+.board__h2 {
+  font-family: "Fira Code", Arial, sans-serif;
+  margin-bottom: 2rem;
+}
+
 .board button:hover {
   background: #eee;
   color: #222;
