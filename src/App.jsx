@@ -4,28 +4,9 @@ import confetti from 'canvas-confetti' // Importamos confeti para usarlo si algu
 // Importamos nuestro componente 👇
 import { Square } from './Square.jsx'
 
-// Definimos quiénes pueden jugar: 'X' y 'O'
-const TURNS = { 
-  X: 'x',
-  O: 'o'
-}
-
-// Combos que se pueden hacer
-const WINNER_COMBOS = [
-  // Horizontales
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-
-  // Verticales
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-
-  // Diagonales
-  [0, 4, 8],
-  [2, 4, 6],
-]
+// Importamos nuestras constantes que están fuera del componente principal 👇
+import { TURNS } from './constants.js'
+import { WINNER_COMBOS } from './constants.js'
 
 
 // Componente principal App
