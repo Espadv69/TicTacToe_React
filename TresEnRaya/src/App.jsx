@@ -1,25 +1,13 @@
 import { useState } from 'react' // Importamos cosas necesarias de React
-import confetti from 'canvas-confetti'
+import confetti from 'canvas-confetti' // Importamos confeti para usarlo si alguien gana
+
+// Importamos nuestro componente 👇
+import { Square } from './Square.jsx'
 
 // Definimos quiénes pueden jugar: 'X' y 'O'
 const TURNS = { 
   X: 'x',
   O: 'o'
-}
-
-// Componente Square representa un cuadrado en el tablero
-const Square = ({ children, isSelected, updateBoard, index }) => { 
-  const className = `square ${isSelected ? 'is-selected' : ''}` // Clase para resaltar el turno actual
-
-  const handleClick = () => { // Cuando hacemos clic en un cuadrado
-    updateBoard(index)
-  }
-
-  return (
-    <div onClick={handleClick} className={className}> {/* Llama a handleClick cuando se hace clic */}
-      {children} {/* Muestra el contenido del cuadrado */}
-    </div>
-  )
 }
 
 // Combos que se pueden hacer
