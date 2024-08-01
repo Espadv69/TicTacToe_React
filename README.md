@@ -1,7 +1,3 @@
-¡Claro! Aquí tienes un ejemplo de un README para tu proyecto de Tres en Raya (Tic-Tac-Toe) en React:
-
----
-
 # Tic-Tac-Toe Game
 
 Welcome to the **Tic-Tac-Toe Game** project! This repository contains the code for a classic Tic-Tac-Toe game built using React.
