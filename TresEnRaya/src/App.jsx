@@ -75,6 +75,12 @@ function App() {
     setWinner(null)
   }
 
+  // Revisar si hay empate
+  const checkEndGame = (newBoard) => {
+    // Revisamos si hay un empate, si no hay más espacios vacíos en el tablero
+    return newBoard.every((square) => square !== null)
+  }
+
 
   // Función para actualizar el tablero y cambiar de turno
   const updateBoard = (index) => {
@@ -90,7 +96,9 @@ function App() {
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
       setWinner(newWinner)
-    } // ToDo: check if game is over
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false)
+    }
 
     // Cambiamos el turno
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X 
