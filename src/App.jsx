@@ -5,6 +5,9 @@ import confetti from 'canvas-confetti' // Importamos confeti para usarlo si algu
 import { Square } from './components/Square.jsx'
 import { WinnerModal } from './components/WinnerModal.jsx'
 
+// Importamos datos localStorage
+import { saveGameToStorage, resetGameStorage } from './logic/storage/index.js'
+
 // Importamos nuestras constantes que están fuera del componente principal 👇
 import { TURNS } from './constants.js'
 import { checkWinnerFrom, checkEndGame } from './logic/board.js'
@@ -14,9 +17,15 @@ import { checkWinnerFrom, checkEndGame } from './logic/board.js'
 function App() {
 
   // Estado para el tablero de juego, inicialmente vacío
-  const [board, setBoard] = useState(Array(9).fill(null))
+  const [board, setBoard] = useState(() => {
+    const boardFromStorage = window.localStorage.getItem('board')
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
+  })
   // Estado para el turno, inicialmente es el turno de 'X'
-  const [turn, setTurn] = useState(TURNS.X)
+  const [turn, setTurn] = useState(() => {
+    const turnFromStorage = window.localStorage.getItem('turn')
+    return turnFromStorage ?? TURNS.X
+  })
   // Estado para ganador
   const [winner, setWinner] = useState(null) // null => No hay Ganador --- false => Empate
 
@@ -25,6 +34,7 @@ function App() {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
+    resetGameStorage()
   }
 
   // Función para actualizar el tablero y cambiar de turno
@@ -38,6 +48,15 @@ function App() {
     newBoard[index] = turn
     setBoard(newBoard)
 
+    // Cambiamos el turno
+    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X 
+    setTurn(newTurn)
+
+    saveGameToStorage({
+      board: newBoard,
+      turn: newTurn
+    })
+
     const newWinner = checkWinnerFrom(newBoard)
     if (newWinner) {
       confetti()
@@ -46,9 +65,6 @@ function App() {
       setWinner(false)
     }
 
-    // Cambiamos el turno
-    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X 
-    setTurn(newTurn)
   }
 
   return (
