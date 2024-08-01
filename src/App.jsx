@@ -7,7 +7,7 @@ import { WinnerModal } from './components/WinnerModal.jsx'
 
 // Importamos nuestras constantes que están fuera del componente principal 👇
 import { TURNS } from './constants.js'
-import { checkWinnerFrom } from './logic/board.js'
+import { checkWinnerFrom, checkEndGame } from './logic/board.js'
 
 
 // Componente principal App
@@ -20,22 +20,12 @@ function App() {
   // Estado para ganador
   const [winner, setWinner] = useState(null) // null => No hay Ganador --- false => Empate
 
-
-
-
   // Función para resetear juego
   const resetGame = () => {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
   }
-
-  // Revisar si hay empate
-  const checkEndGame = (newBoard) => {
-    // Revisamos si hay un empate, si no hay más espacios vacíos en el tablero
-    return newBoard.every((square) => square !== null)
-  }
-
 
   // Función para actualizar el tablero y cambiar de turno
   const updateBoard = (index) => {
