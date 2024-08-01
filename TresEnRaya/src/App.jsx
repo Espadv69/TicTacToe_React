@@ -68,17 +68,29 @@ function App() {
     return null // Si no hay ganador
   }
 
+  // Función para resetear juego
+  const resetGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
+  }
+
 
   // Función para actualizar el tablero y cambiar de turno
   const updateBoard = (index) => {
 
     // No actualizamos la posición si ya tiene algo
-    if (board[index]) return
+    if (board[index] || winner) return
 
     // Actualizamos el tablero
     const newBoard = [...board]
     newBoard[index] = turn
     setBoard(newBoard)
+
+    const newWinner = checkWinner(newBoard)
+    if (newWinner) {
+      setWinner(newWinner)
+    } // ToDo: check if game is over
 
     // Cambiamos el turno
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X 
@@ -120,6 +132,35 @@ function App() {
           {TURNS.O}
         </Square>
       </section>
+
+      {
+        winner !== null && (
+          <section className='winner'>
+            <div className="text">
+
+              <h2>
+                {
+                  winner === false
+                  ? 'Empate'
+                  : 'Ganó:'
+                }
+              </h2>
+
+              <header className="win">
+                {winner && <Square> {winner} </Square>}
+              </header>
+
+              <footer>
+                <button
+                onClick={resetGame}
+                >
+                  Empezar de nuevo
+                </button>
+              </footer>
+            </div>
+          </section>
+        )
+      }
     </main>
   )
 }
