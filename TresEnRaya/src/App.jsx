@@ -41,7 +41,7 @@ function App() {
 
   return (
     <main className="board"> {/* Contenedor principal del juego */}
-      <h2>Hola mundo</h2> {/* Título del juego */}
+      <h2 className="board__h2">Tik Tak Toe</h2> {/* Título del juego */}
       
       <section className="game"> {/* Sección del tablero de juego */}
         {
