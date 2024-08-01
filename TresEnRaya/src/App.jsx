@@ -22,20 +22,66 @@ const Square = ({ children, isSelected, updateBoard, index }) => {
   )
 }
 
+// Combos que se pueden hacer
+const WINNER_COMBOS = [
+  // Horizontales
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+
+  // Verticales
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+
+  // Diagonales
+  [0, 4, 8],
+  [2, 4, 6],
+]
+
+
 // Componente principal App
 function App() {
+
   // Estado para el tablero de juego, inicialmente vacío
   const [board, setBoard] = useState(Array(9).fill(null))
   // Estado para el turno, inicialmente es el turno de 'X'
   const [turn, setTurn] = useState(TURNS.X)
+  // Estado para ganador
+  const [winner, setWinner] = useState(null) // null => No hay Ganador --- false => Empate
+
+
+  const checkWinner = (boardToCheck) => {
+
+    // Revisamos todas las posiciones ganadoras para ver si X u O ganó
+    for (const combo of WINNER_COMBOS) {
+      const [a, b, c] = combo
+      if (
+        boardToCheck[a] &&
+        boardToCheck[a] === boardToCheck[b] &&
+        boardToCheck[a] === boardToCheck[c]
+      ) {
+        return boardToCheck[a] // 👈 Develvería X u O
+      }
+    }
+
+    return null // Si no hay ganador
+  }
+
 
   // Función para actualizar el tablero y cambiar de turno
   const updateBoard = (index) => {
+
+    // No actualizamos la posición si ya tiene algo
+    if (board[index]) return
+
+    // Actualizamos el tablero
     const newBoard = [...board]
     newBoard[index] = turn
     setBoard(newBoard)
 
-    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X // Cambiamos el turno
+    // Cambiamos el turno
+    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X 
     setTurn(newTurn)
   }
 
