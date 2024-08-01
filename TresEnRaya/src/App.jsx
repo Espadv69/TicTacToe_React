@@ -100,6 +100,11 @@ function App() {
   return (
     <main className="board"> {/* Contenedor principal del juego */}
       <h2 className="board__h2">Tik Tak Toe</h2> {/* Título del juego */}
+      <button
+      onClick={resetGame}
+      >
+        Reiniciar juego
+      </button>
       
       <section className="game"> {/* Sección del tablero de juego */}
         {
